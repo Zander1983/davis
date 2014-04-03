@@ -61,7 +61,11 @@ define(function (require) {
     
             var src = "";
             var description = this.model.attributes.description;     
-            $(description).find('img').each(function(i, obj){
+            
+            console.log('description is ');
+            console.log(description);
+            
+            $('<div>'+description+'</div>').find('img').each(function(i, obj){
                 
 
                     src = $(obj).attr('src');

@@ -10,7 +10,7 @@ define(function (require) {
         
      function clickAway(event) {
     
-        that.body.find('#main-content').css('min-height', '1000px'); 
+        that.body.find('#main-content').css('min-height', '872px'); 
         document.removeEventListener('backbutton', clickAway);
        
     }
@@ -30,7 +30,7 @@ define(function (require) {
     
             require(['async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false'], function(){
             
-                that.myLatlng = new google.maps.LatLng(52.680971,-7.817217);
+                that.myLatlng = new google.maps.LatLng(52.125347,-8.642634);
 
                 that.mapOptions = {
                    center: that.myLatlng,
