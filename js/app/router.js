@@ -107,6 +107,9 @@ define(function (require) {
                     }
                 }
    
+                console.log('options.url is ');
+                console.log(options.url);
+   
   
            });
 
@@ -500,6 +503,11 @@ define(function (require) {
                 
                   if(typeof(deviceModel)==='undefined' || deviceModel===null){
                         Useful.showSpinner();
+                        
+                        if(in_browser===true){
+                            that.device_id = test_device_id;
+                            that.api_key = test_api_key;
+                        }
  
                         if(typeof(that.device_id)==='undefined' || that.device_id===null){
                             that.setDeviceDetails();
@@ -618,6 +626,12 @@ define(function (require) {
                 if(typeof(articles)==='undefined' || articles===null){
                     Useful.showSpinner();
                     
+                    
+                    if(in_browser===true){
+                        that.device_id = test_device_id;
+                        that.api_key = test_api_key;
+                    }
+                    
                     if(typeof(that.device_id)==='undefined' || that.device_id===null){
                         that.setDeviceDetails();
                     }
@@ -626,7 +640,7 @@ define(function (require) {
                        
                         articles = new models.ArticleCollection({device_id: that.device_id, project_title: project_title
                                                                 });
-
+                                
                         articles.fetch({
                             api: true,
                             headers: {device_id:that.device_id,api_key:that.api_key},

@@ -91,11 +91,19 @@ define(function (require) {
     
     UsefulFuncs.showAlert = function(text, title) {
  
-        navigator.notification.alert(
-            text,  // message
-            function(){},         // callback
-            title            // title
-        );
+            try {
+                navigator.notification.alert(
+                    text,  // message
+                    function(){},         // callback
+                    title            // title
+                );
+            } 
+            catch(e) {
+                alert(text);
+            } 
+            finally {
+
+            }
     };
     
     UsefulFuncs.showConfirm = function(text, title, klass) {
