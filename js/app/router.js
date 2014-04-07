@@ -107,9 +107,6 @@ define(function (require) {
                     }
                 }
    
-                console.log('options.url is ');
-                console.log(options.url);
-   
   
            });
 
