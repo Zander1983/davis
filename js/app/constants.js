@@ -11,6 +11,7 @@
         school_name = "David College Mallow",
         twitter_handle = "DavisCollegeMal",
         gmail = 'daviscollegemallow@gmail.com',
+        /**********N.B. The 3 variables below MUST all be false when submitting to app stores*******/
         is_push = false,
         is_emulator = false,
         in_browser = false;

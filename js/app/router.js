@@ -442,11 +442,6 @@ define(function (require) {
             //body.removeClass('left-nav');
             require(["app/models/photo", "app/views/PhotoList"], function (model, PhotoList) {
                 
-                
-                    if(typeof(that.flickr_api_key)==='undefined' || that.flickr_api_key===null){
-                        that.setFlickrDetails();
-                    }
-
                     Useful.showSpinner();
                     photos = new model.PhotoCollection([], {flickr_api_key:flickr_api_key,
                                                             flickr_user_id:flickr_user_id,
