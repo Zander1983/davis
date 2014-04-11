@@ -36,18 +36,15 @@ var app = {
             var url = push_server_url+"/device_api/device";
             //var url = "http://localhost/schoolspace/device_api/device";
            
-           alert('the fucking url is '+url);
           
             $.ajax({
                 url: url,
                 type: "post",
-                data: {project_title: project_title, platform: window.device.platform, multiple:"yes"},
+                data: {project_title: project_title, platform: window.device.platform},
                 pure_ajax: true,
                 headers :{device_id:standard_device_id,
                 api_key:standard_api_key},
                 success: function(data){
-                    
-                    alert('registered with server');
 
                     var obj = jQuery.parseJSON(data);
                 
@@ -61,8 +58,6 @@ var app = {
                     
                 },
                 error:   function(model, xhr, options){
-            
-                    alert('failed register with server');
 
                     console.log('error reggistering, response is : ');
                     console.log(xhr.responseText);
@@ -78,7 +73,7 @@ var app = {
             $.ajax({
                 url: url,
                 type: "put",
-                data: {reg_id: reg_id, multiple:"yes"},
+                data: {reg_id: reg_id},
                 pure_ajax: true,
                 headers :{device_id:device_id,
                 api_key:api_key},

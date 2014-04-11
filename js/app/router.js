@@ -13,7 +13,7 @@ define(function (require) {
         photos,
         albums,
         articles,
-        deviceNotificationModel,
+        deviceModel,
         that,
         flickr_api_key,
         flickr_user_id,
@@ -46,7 +46,7 @@ define(function (require) {
             "albums": "getAlbums",
             "photos/:id": "getPhotos",
             "photo-item/:id": "getPhotoItem",
-            "notification": "getMultipleNotification",
+            "notification": "getNotification",
             "messages/:project_title": "getArticles",
             "message/:id": "getArticle",
             "waypay": "getWayPay",
@@ -106,9 +106,7 @@ define(function (require) {
                         options.url = 'http://localhost/schoolspace/cli/'+project_title+'/www/scripts' + options.url   
                     }
                 }
-   
-                alert('options.url are');
-                alert(options.url);
+
   
            });
 
@@ -546,24 +544,18 @@ define(function (require) {
         },*/
         
         
-        getMultipleNotification: function () {
+        getNotification: function () {
             
-            require(["app/models/devicenotification", "app/views/MultipleNotifications"], function (model, MultipleNotifications) {
+            require(["app/models/device", "app/views/Notification"], function (model, Notification) {
                 
-                  if(typeof(deviceNotificationModel)==='undefined' || deviceNotificationModel===null){
+                  if(typeof(deviceModel)==='undefined' || deviceModel===null){
                         Useful.showSpinner();
-                        
-                        if(in_browser===true){
-                            that.device_id = test_device_id;
-                            that.api_key = test_api_key;
-                        }
  
                         if(typeof(that.device_id)==='undefined' || that.device_id===null){
                             that.setDeviceDetails();
                         }
                         
-                        deviceNotificationModel = new model.DeviceNotification({id:that.device_id});
-                        //deviceNotificationModel = new model.DeviceNotification({id:150});
+                        deviceModel = new model.Device({id:that.device_id});
 
 
                         if(typeof(that.device_id)==='undefined' || that.device_id===null || typeof(that.api_key)==='undefined' || that.api_key===null){
@@ -573,12 +565,12 @@ define(function (require) {
                             window.location.hash = "news";
                         }
                         else{   
-                            deviceNotificationModel.fetch({
+                            deviceModel.fetch({
                                 api: true,
                                 headers: {device_id:that.device_id,api_key:that.api_key},        
                                 success: function (data) {
                                     Useful.correctView(that.body);
-                                    slider.slidePage(new MultipleNotifications({model: data
+                                    slider.slidePage(new Notification({model: data
                                                                         }).$el);   
                                     Useful.hideSpinner();
                                 },
@@ -592,7 +584,7 @@ define(function (require) {
                     
                   }else{    
                         Useful.correctView(that.body);
-                        slider.slidePage(new Notification({model: deviceNotificationModel
+                        slider.slidePage(new Notification({model: deviceModel
                                                             }).$el);    
                   }
 

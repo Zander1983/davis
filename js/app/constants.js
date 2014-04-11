@@ -5,7 +5,7 @@
 
     var project_title = "davis", 
         project_number = "33273840335", 
-        push_server_url = "http://192.168.1.29", 
+        push_server_url = "http://push.schoolspace.ie", 
         standard_device_id = "63843", 
         standard_api_key = "hv7Vgd4jsbb",
         school_name = "David College Mallow",
