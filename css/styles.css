@@ -358,3 +358,9 @@ DIV#loader {
 DIV#loader.loading {
   background: url(images/spinner.gif) no-repeat center center;
 }
+
+
+.clear-margin{
+    clear:both;
+    margin-bottom: 5px;
+}

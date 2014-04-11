@@ -13,7 +13,7 @@ define(function (require) {
         photos,
         albums,
         articles,
-        deviceModel,
+        deviceNotificationModel,
         that,
         flickr_api_key,
         flickr_user_id,
@@ -46,7 +46,7 @@ define(function (require) {
             "albums": "getAlbums",
             "photos/:id": "getPhotos",
             "photo-item/:id": "getPhotoItem",
-            "notification": "getNotification",
+            "notification": "getMultipleNotification",
             "messages/:project_title": "getArticles",
             "message/:id": "getArticle",
             "waypay": "getWayPay",
@@ -83,18 +83,18 @@ define(function (require) {
 
                 if(options.api==true){
                     //172.16.22.68
-                    //options.url = "http://localhost/schoolspace/device_api" + options.url;
+                    //options.url = "http://localhost/schoolspace/device_api2" + options.url;
                     
                     if(in_browser===true){
-                        options.url = "http://localhost/schoolspace.me/device_api" + options.url;    
+                        options.url = "http://localhost/schoolspace.me/device_api2" + options.url;    
                     }
                     else{
                         if(options.update_notification==true){
-                           //options.url = "http://localhost/schoolspace/device_api/update_notification" + options.url+"";   
+                           //options.url = "http://localhost/schoolspace/device_api2/update_notification" + options.url+"";   
                            options.url = push_server_url+"/device_api/update_notification" + options.url+"";   
                         }
                         else{
-                            //options.url = "http://localhost/schoolspace/device_api" + options.url;   
+                            //options.url = "http://localhost/schoolspace/device_api2" + options.url;   
                             options.url = push_server_url+"/device_api" + options.url;          
 
                         }
@@ -107,6 +107,8 @@ define(function (require) {
                     }
                 }
    
+                alert('options.url are');
+                alert(options.url);
   
            });
 
@@ -488,12 +490,13 @@ define(function (require) {
              });
         },
                 
-                
+          
+                /*
         getNotification: function () {
             
             require(["app/models/device", "app/views/Notification"], function (model, Notification) {
                 
-                  if(typeof(deviceModel)==='undefined' || deviceModel===null){
+                  if(typeof(deviceNotificationModel)==='undefined' || deviceNotificationModel===null){
                         Useful.showSpinner();
                         
                         if(in_browser===true){
@@ -505,7 +508,7 @@ define(function (require) {
                             that.setDeviceDetails();
                         }
                         
-                        deviceModel = new model.Device({id:that.device_id});
+                        deviceNotificationModel = new model.Device({id:that.device_id});
 
 
                         if(typeof(that.device_id)==='undefined' || that.device_id===null || typeof(that.api_key)==='undefined' || that.api_key===null){
@@ -515,7 +518,7 @@ define(function (require) {
                             window.location.hash = "news";
                         }
                         else{   
-                            deviceModel.fetch({
+                            deviceNotificationModel.fetch({
                                 api: true,
                                 headers: {device_id:that.device_id,api_key:that.api_key},        
                                 success: function (data) {
@@ -534,14 +537,68 @@ define(function (require) {
                     
                   }else{    
                         Useful.correctView(that.body);
-                        slider.slidePage(new Notification({model: deviceModel
+                        slider.slidePage(new Notification({model: deviceNotificationModel
+                                                            }).$el);    
+                  }
+
+       
+             });
+        },*/
+        
+        
+        getMultipleNotification: function () {
+            
+            require(["app/models/devicenotification", "app/views/MultipleNotifications"], function (model, MultipleNotifications) {
+                
+                  if(typeof(deviceNotificationModel)==='undefined' || deviceNotificationModel===null){
+                        Useful.showSpinner();
+                        
+                        if(in_browser===true){
+                            that.device_id = test_device_id;
+                            that.api_key = test_api_key;
+                        }
+ 
+                        if(typeof(that.device_id)==='undefined' || that.device_id===null){
+                            that.setDeviceDetails();
+                        }
+                        
+                        deviceNotificationModel = new model.DeviceNotification({id:that.device_id});
+                        //deviceNotificationModel = new model.DeviceNotification({id:150});
+
+
+                        if(typeof(that.device_id)==='undefined' || that.device_id===null || typeof(that.api_key)==='undefined' || that.api_key===null){
+                            Useful.hideSpinner();
+                            Useful.correctView(that.body);
+                            Useful.showAlert('Could not get notification settings, please try again later', 'Problem');
+                            window.location.hash = "news";
+                        }
+                        else{   
+                            deviceNotificationModel.fetch({
+                                api: true,
+                                headers: {device_id:that.device_id,api_key:that.api_key},        
+                                success: function (data) {
+                                    Useful.correctView(that.body);
+                                    slider.slidePage(new MultipleNotifications({model: data
+                                                                        }).$el);   
+                                    Useful.hideSpinner();
+                                },
+                                error:function(model, xhr, options){    
+                                    Useful.correctView(that.body);
+                                    Useful.hideSpinner();
+                                    Useful.checkNetwork(slider);                  
+                                }
+                            });
+                        }
+                    
+                  }else{    
+                        Useful.correctView(that.body);
+                        slider.slidePage(new Notification({model: deviceNotificationModel
                                                             }).$el);    
                   }
 
        
              });
         },
-        
         
                 
         getArticle: function (id) {
